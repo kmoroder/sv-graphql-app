@@ -14,8 +14,9 @@ By the end of this activity, you will have experience writing queries and mutati
 
 This repository has been built using the basic Vue CLI setup with JavaScript. You are welcome to use a different setup (for example, using SASS, TypeScript, Vuex, etc)– simply create a new app using the [vue-cli](https://cli.vuejs.org/).
 
-
 ## Project setup
+
+### Install dependencies
 ```
 yarn install
 ```
@@ -34,6 +35,12 @@ yarn run build
 ```
 yarn run lint
 ```
+
+### API Keys
+
+You will need to create an access token for use in the API. Make sure you are storing this in your environment variables and don't accidentally hardcode it into your app!
+
+[How to create a personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
 
 ## Requirements
 

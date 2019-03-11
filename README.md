@@ -1,4 +1,4 @@
-# sv-graphql-app
+# SV GraphQL App 
 
 ## Project setup
 ```
@@ -15,15 +15,22 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
 ### Lints and fixes files
 ```
 yarn run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Requirements
+
+Include the following functionality in your app. 
+
+### Queries
+1. Display user data
+1. List all public repositories
+1. View all project cards in current repository
+
+### Mutations
+1. Update user status on Github
+1. Add project card
+1. Update project card
+1. Delete project card

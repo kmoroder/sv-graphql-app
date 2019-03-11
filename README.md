@@ -10,6 +10,10 @@ As you will see through interaction with the Github API, some of the benefits of
 
 By the end of this activity, you will have experience writing queries and mutations in a simple Vue.js app. 
 
+## Options
+
+This repository has been built using the basic Vue CLI setup with JavaScript. You are welcome to use a different setup (for example, using SASS, TypeScript, Vuex, etc)– simply create a new app using the [vue-cli](https://cli.vuejs.org/).
+
 
 ## Project setup
 ```

@@ -47,12 +47,12 @@ You will need to create an access token for use in the API. Make sure you are st
 Include the following functionality in your app. 
 
 ### Queries
-1. [ COMPLETED ] Display user data
+1. [ STARTED ] Display user data
 1. List all public repositories (include information like creation date, stars, etcetera)
 1. View all project cards in current repository
 
 ### Mutations
-1. [ COMPLETED ]Update user status on Github
+1. Update user status on Github
 1. Add project card
 1. Update project card
 1. Delete project card

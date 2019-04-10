@@ -1,6 +1,6 @@
 # SV GraphQL App 
 
-A Github GUI app using Vue.js and GraphQL
+A Github GUI app using Vue.js and GraphQL.
 
 ## Purpose
 
@@ -11,6 +11,8 @@ As you will see through interaction with the Github API, some of the benefits of
 By the end of this activity, you will have experience writing queries and mutations in a simple Vue.js app. 
 
 ## Project setup
+
+Create a fork of this project. When you are finished, make a pull request against the branch with your username.
 
 ### Install dependencies
 ```
@@ -66,13 +68,16 @@ If you're feeling super adventurous, you may also want to try using [Apollo](htt
 
 ## Useful Resources
 
+- Watch GraphQL Fundamentals videos: https://www.howtographql.com/
+- Read why Github shifted their official API to GraphQL: https://githubengineering.com/the-github-graphql-api/
 - Test queries with the Github GraphQL IDE: https://developer.github.com/v4/explorer/
 - GraphQL documentation: https://graphql.org/learn/
 - Github API documentation: https://developer.github.com/v3/
 
 ## Submission instructions
 
-- When finished developing your app, make a pull request against the master fork /  your branch
+- When finished developing your app, make a pull request against your branch.
+
 - Answer the following questions in your pull request:
   - What was confusing or challenging?
   - What questions do you still have?

@@ -10,10 +10,6 @@ As you will see through interaction with the Github API, some of the benefits of
 
 By the end of this activity, you will have experience writing queries and mutations in a simple Vue.js app. 
 
-## Options
-
-This repository has been built using the basic Vue CLI setup with JavaScript. You are welcome to use a different setup (for example, using SASS, TypeScript, Vuex, etc)– simply create a new app using the [vue-cli](https://cli.vuejs.org/).
-
 ## Project setup
 
 ### Install dependencies
@@ -42,7 +38,7 @@ You will need to create an access token for use in the API. Make sure you are st
 
 [How to create a personal access token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
 
-## Requirements
+## Basic Requirements
 
 Include the following functionality in your app. 
 
@@ -56,6 +52,17 @@ Include the following functionality in your app.
 1. Add project card
 1. Update project card
 1. Delete project card
+
+
+For at least one of the queries/mutations above, add in:
+1. An [argument](https://graphql.org/learn/queries/#arguments)
+1. A [directive](https://graphql.org/learn/queries/#directives)
+
+## Options
+
+This repository has been built using the basic Vue CLI setup with JavaScript. You are welcome to use a different setup (for example, using SASS, TypeScript, Vuex, etc)– simply create a new app using the [vue-cli](https://cli.vuejs.org/).
+
+If you're feeling super adventurous, you may also want to try using [Apollo](https://github.com/Akryum/vue-apollo) with GraphQL.
 
 ## Useful Resources
 

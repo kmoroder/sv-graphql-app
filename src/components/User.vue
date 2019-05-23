@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ login }}
+    <div>user: {{ login }}</div>
+    <img :src="this.avatarUrl" width="200" />
+    <div>bio: {{ bio }}</div>
   </div>
 </template>
 
@@ -14,6 +16,8 @@ export default {
   }),
   async mounted() {
     try {
+      // eslint-disable-next-line no-console
+      console.log(process.env);
       const response = await this.$http({
         url: "https://api.github.com/graphql",
         headers: {
@@ -25,6 +29,8 @@ export default {
         }
       });
       this.login = response.data.data.viewer.login;
+      this.avatarUrl = response.data.data.viewer.avatarUrl;
+      this.bio = response.data.data.viewer.bio;
     } catch (err) {
       // eslint-disable-next-line
       console.log(err);

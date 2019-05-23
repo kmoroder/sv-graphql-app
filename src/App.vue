@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <User />
+    <Repos />
   </div>
 </template>
 
 <script>
 import User from "./components/User.vue";
+import Repos from "./components/Repos.vue";
 
 export default {
   name: "app",
   components: {
-    User
+    User,
+    Repos
   }
 };
 </script>

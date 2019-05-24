@@ -1,11 +1,12 @@
 <template>
   <div>
-    Here my Repositories...
-    <ul>
+    <h2>Here my Repositories...</h2>
+    <ul class="repos">
       <li v-bind:key="repo.id" v-for="repo in repos" @click="showRepo(repo)">
         <img :src="getThumbs()">
-        <h3>{{ repo.node.name }} ( {{ repo.node.stargazers.totalCount }} stars)</h3>
+        <h4>{{ repo.node.name }} ( {{ repo.node.stargazers.totalCount }} stars)</h4>
         <p>{{ repo.node.primaryLanguage.name }}</p>
+        <p>creation date: {{ repo.node.createdAt | moment }}</p>
       </li>
     </ul>
   </div>
@@ -22,13 +23,19 @@ export default {
   }),
   methods: {
     getThumbs() {
-      return "https://picsum.photos/75?random=" + Math.random();
+      return "https://picsum.photos/75?blur=1&random=" + Math.random();
     },
     showRepo(repo) {
       alert(repo.node.id);
     }
   },
   computed: {},
+  filters: {
+    moment: function(date) {
+      // return moment(date).format("MMMM Do YYYY, h:mm:ss a");
+      return moment(date).format("L");
+    }
+  },
   async mounted() {
     try {
       // eslint-disable-next-line no-console
@@ -111,9 +118,11 @@ div {
   margin: 20px;
 }
 
-ul {
+ul.repos {
   list-style-type: none;
-  width: 700px;
+  width: 400px;
+  margin: auto;
+  margin-top: 50px;
 }
 
 h3 {

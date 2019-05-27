@@ -1,35 +1,56 @@
 <template>
-  <div>
-    {{ login }}
+  <div class="post-list">
+    {{ message }}
+    <!-- If there is one or more queries loading -->
+    <template v-if="loading > 0">
+      Loading
+    </template>
+    <!-- Actual view -->
+    <template v-else>
+      <ul>
+        {{ viewer.avatarUrl }} is your avatar url
+        {{ viewer.login }} is your login
+        {{ viewer.bio }} is your bio
+      </ul>
+    </template>
   </div>
 </template>
 
+
 <script>
-export default {
-  name: "HelloWorld",
-  data: () => ({
-    avatarUrl: "",
-    login: "Loading!",
-    bio: ""
-  }),
-  async mounted() {
-    try {
-      const response = await this.$http({
-        url: "https://api.github.com/graphql",
-        headers: {
-          Authorization: `Bearer ${process.env.VUE_APP_GITHUB_TOKEN}`
-        },
-        method: "post",
-        data: {
-          query: `query { viewer { avatarUrl login bio } }`
-        }
-      });
-      this.login = response.data.data.viewer.login;
-    } catch (err) {
-      // eslint-disable-next-line
-      console.log(err);
+import gql from 'graphql-tag';
+// GraphQL query
+const viewerQuery = gql`
+  query {
+    viewer {
+      avatarUrl
+      login
+      bio
     }
   }
+`;
+// Vue component definition
+export default {
+  // Local state
+  data: () => ({
+    message: 'Hello Git User',
+    // You can initialize the 'posts' data here
+    viewer: {},
+    loading: 0,
+  }),
+  // Apollo GraphQL
+  apollo: {
+    // Local state 'posts' data will be updated
+    // by the GraphQL query result
+    viewer: {
+      // GraphQL query
+      query: viewerQuery,
+      // Will update the 'loading' attribute
+      // +1 when a new query is loading
+      // -1 when a query is completed
+      loadingKey: 'loading',
+    },
+  },
 };
 </script>
 

@@ -1,32 +1,206 @@
 <template>
-  <div>
-    <h2>Here my Repositories...</h2>
-    <ul class="repos">
-      <li v-bind:key="repo.id" v-for="repo in repos" @click="showRepo(repo)">
-        <img :src="getThumbs()">
-        <h4>{{ repo.node.name }} ( {{ repo.node.stargazers.totalCount }} stars)</h4>
-        <p>{{ repo.node.primaryLanguage.name }}</p>
-        <p>creation date: {{ repo.node.createdAt | moment }}</p>
-      </li>
-    </ul>
+  <div class="row">
+    <div class="col">
+      <h4>Here my Repositories...</h4>
+      <ul class="repos">
+        <li
+          v-bind:key="repo.id"
+          v-for="repo in repos"
+          @click="showRepo(repo.node)"
+        >
+          <img :src="getThumbs()" />
+          <h4>
+            {{ repo.node.name }} ( {{ repo.node.stargazers.totalCount }} stars)
+          </h4>
+          <p>{{ repo.node.description }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <Repo :repo="this.selectedRepoDetails"></Repo>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import Repo from "./Repo.vue";
 
 export default {
-  name: "Repositories",
+  name: "Repos",
+  components: {
+    Repo
+  },
   data: () => ({
     response: "",
-    repos: []
+    repos: [],
+    selectedRepo: null,
+    selectedRepoDetails: null
   }),
   methods: {
     getThumbs() {
-      return "https://picsum.photos/75?blur=1&random=" + Math.random();
+      return "https://picsum.photos/65?blur=1&random=" + Math.random();
     },
     showRepo(repo) {
-      alert(repo.node.id);
+      this.selectedRepo = repo;
+      this.fetchRepoDetails(this.selectedRepo.name);
+    },
+    async fetchMyRepos() {
+      try {
+        const limit = 20;
+        const q = `
+        {
+          viewer {
+            name
+            repositories(last: ${limit}) {
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  createdAt
+                  projects(last: 5) {
+                    totalCount
+                    edges {
+                      node {
+                        body
+                        name
+                        columns(last: 100) {
+                          edges {
+                            node {
+                              cards {
+                                edges {
+                                  node {
+                                    id
+                                    note
+                                  }
+                                }
+                              }
+                              name
+                            }
+                          }
+                        }
+                        url
+                        number
+                        name
+                        state
+                      }
+                    }
+                  }
+                  primaryLanguage {
+                    name
+                  }
+                  stargazers(last: 15) {
+                    totalCount
+                  }
+                }
+              }
+            }
+          }
+        }`;
+
+        const response = await this.$http({
+          url: "https://api.github.com/graphql",
+          headers: {
+            Authorization: `Bearer ${process.env.VUE_APP_GITHUB_TOKEN}`
+          },
+          method: "post",
+          data: {
+            query: q
+          }
+        });
+        this.response = response.data.data;
+        this.repos = response.data.data.viewer.repositories.edges;
+        // eslint-disable-next-line no-console
+        console.log(this.response);
+      } catch (err) {
+        // eslint-disable-next-line
+        console.log(err);
+      }
+    },
+    async fetchRepoDetails(repoName) {
+      try {
+        const limit = 20;
+        const q = `
+        {
+         viewer {
+            repository(name:"${repoName}"){
+              name
+              createdAt
+              description
+              forkCount
+              isPrivate
+              primaryLanguage {
+                name
+              }
+              languages(first:${limit}) {
+                edges {
+                  node {
+                    name
+                  }
+                }
+              }
+              projects(first:${limit}) {
+                edges {
+                  node {
+                    name
+                    body
+                    columns(first: ${limit}) {
+                      totalCount
+                      edges {
+                        node {
+                          id
+                          name
+                          purpose
+                          cards(last:${limit}) {
+                            totalCount
+                            edges {
+                              node {
+                                id
+                                note
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    
+                  }
+                }
+              }
+              stargazers {
+                totalCount
+              }
+              watchers{
+                totalCount
+              }
+            }
+          }
+        }`;
+
+        const response = await this.$http({
+          url: "https://api.github.com/graphql",
+          headers: {
+            Authorization: `Bearer ${process.env.VUE_APP_GITHUB_TOKEN}`
+          },
+          method: "post",
+          data: {
+            query: q
+          }
+        });
+        const res = response.data.data;
+        // eslint-disable-next-line no-console
+        if (res && res.viewer) {
+          this.selectedRepoDetails = null;
+          this.selectedRepoDetails = res.viewer.repository;
+        } else {
+          this.selectedRepoDetails = null;
+        }
+        // eslint-disable-next-line no-console
+        // console.log(this.selectedRepoDetails);
+      } catch (err) {
+        // eslint-disable-next-line
+        console.log(err);
+      }
     }
   },
   computed: {},
@@ -37,73 +211,7 @@ export default {
     }
   },
   async mounted() {
-    try {
-      // eslint-disable-next-line no-console
-      const response = await this.$http({
-        url: "https://api.github.com/graphql",
-        headers: {
-          Authorization: `Bearer ${process.env.VUE_APP_GITHUB_TOKEN}`
-        },
-        method: "post",
-        data: {
-          query: `{
-  viewer {
-    repositories(last: 10) {
-      edges {
-        node {
-          id
-          name
-          createdAt
-          projects(last: 5) {
-            totalCount
-            edges {
-              node {
-                body
-                name
-                columns(last: 100) {
-                  edges {
-                    node {
-                      cards {
-                        edges {
-                          node {
-                            id
-                            note                            
-                          }
-                        }
-                      }
-                      name
-                    }
-                  }
-                }
-                url
-                number
-                name
-                state
-              }
-            }
-          }
-          primaryLanguage {
-            name
-          }
-          stargazers(last: 15) {
-            totalCount
-          }
-        }
-      }
-    }
-  }
-}
-            `
-        }
-      });
-      this.response = response.data.data;
-      this.repos = response.data.data.viewer.repositories.edges;
-      // eslint-disable-next-line no-console
-      console.log(this.repos);
-    } catch (err) {
-      // eslint-disable-next-line
-      console.log(err);
-    }
+    this.fetchMyRepos();
   }
 };
 </script>
@@ -120,7 +228,7 @@ div {
 
 ul.repos {
   list-style-type: none;
-  width: 400px;
+  width: 500px;
   margin: auto;
   margin-top: 50px;
 }

@@ -1,7 +1,13 @@
 <template>
-  <div id="app">
-    <User />
-    <Repos />
+  <div id="app" class="container">
+    <div class="row">
+      <div class="col">
+        <User/>
+      </div>
+    </div>
+    <div class="row">
+      <Repos/>
+    </div>
   </div>
 </template>
 
